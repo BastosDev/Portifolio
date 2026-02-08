@@ -1,0 +1,29 @@
+/* src/styles/global.css */
+
+/* Variáveis de Cores e Fontes */
+:root {
+  --bg-color: #050505;
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa;
+  --accent-green: #4ade80;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Reset Básico */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  overflow-x: hidden; /* Evita rolagem lateral */
+}
+
+a { text-decoration: none; color: inherit; transition: 0.2s; }
+ul { list-style: none; }
+
+/* Utilitários */
+.mono { font-family: var(--font-mono); }

@@ -1,0 +1,110 @@
+<div id="ascii-canvas"></div>
+
+<script>
+  const element = document.getElementById('ascii-canvas');
+  let frame = 0;
+
+  function render() {
+    // Mantive sua resolução, está ótima
+    const width = 120;
+    const height = 60;
+    
+    let buffer = new Array(width * height).fill(" ");
+    let zBuffer = new Array(width * height).fill(0);
+
+    const innerRadius = 2.0; // Diminuí um pouco pra dar mais espaço pro vórtice
+    const outerRadius = 9.0;
+    const tilt = 1.0; 
+    
+    // Diminui o passo pra evitar buracos pretos na imagem (preenchimento sólido)
+    const step = 0.04; 
+
+    for (let r = innerRadius; r < outerRadius; r += step) {
+      // --- A MÁGICA DO VÓRTICE AQUI ---
+      // A velocidade depende do inverso do raio (1/r).
+      // Perto do centro (r=2) -> Velocidade alta.
+      // Longe (r=9) -> Velocidade baixa.
+      // Isso cria a torção visual.
+      let vortexOffset = (frame * 0.08) / r;
+
+      for (let theta = 0; theta < 6.28; theta += step) {
+        
+        // Aplica o offset calculado acima
+        let currentTheta = theta + vortexOffset;
+
+        let x = r * Math.cos(currentTheta);
+        let y = 0; 
+        let z = r * Math.sin(currentTheta);
+
+        // Inclinação
+        let yRotated = y * Math.cos(tilt) - z * Math.sin(tilt);
+        let zRotated = y * Math.sin(tilt) + z * Math.cos(tilt);
+
+        // Projeção
+        let D = 1 / (zRotated + 15); 
+        
+        // Coordenadas de tela
+        let xp = Math.floor(width / 2 + (x * D * 70)); 
+        let yp = Math.floor(height / 2 + (yRotated * D * 35));
+
+        let idx = xp + width * yp;
+
+        if (idx >= 0 && idx < width * height) {
+          if (D > zBuffer[idx]) {
+            zBuffer[idx] = D;
+            
+            // --- Shader de Poeira ---
+            // Adicionei uma "textura" que gira junto com o ângulo original (theta)
+            // Isso faz com que você veja manchas girando, não só ruído estático.
+            let noise = Math.sin(theta * 5) * Math.cos(r * 3);
+            
+            // Brilho base
+            let luminance = (1.5 / (r - 1.0)); 
+            
+            // Aplica o ruído no brilho
+            if (noise > 0.3) luminance *= 1.5; // Pontos brilhantes
+            if (noise < -0.3) luminance *= 0.5; // Pontos escuros
+
+            let chars = " .,:;=co*#%@"; 
+            let charIdx = Math.floor(luminance * 8);
+            charIdx = Math.max(0, Math.min(chars.length - 1, charIdx));
+            
+            buffer[idx] = chars[charIdx];
+          }
+        }
+      }
+    }
+
+    if (element) {
+        // Usa replace para garantir que espaços vazios não colapsem no HTML
+        // E join('\n') para quebrar as linhas corretamente
+        element.innerHTML = buffer.join("").match(new RegExp('.{1,' + width + '}', 'g')).join('\n');
+    }
+
+    frame++;
+    requestAnimationFrame(render);
+  }
+
+  render();
+</script>
+
+<style>
+  #ascii-canvas {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 9px; /* Aumentei 1px pra ficar mais nítido */
+    line-height: 7px; 
+    font-weight: bold; /* Deixa o ASCII mais gordinho/visível */
+    
+    white-space: pre;
+    color: #555; /* Um cinza um pouco mais escuro pra ser sutil */
+    z-index: -1;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.7;
+  }
+</style>

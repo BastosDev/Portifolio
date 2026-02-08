@@ -1,0 +1,431 @@
+---
+import BlackHole from '../components/BlackHole.astro';
+
+// DADOS DO PROJETO
+const projects = [
+  {
+    title: "Lorentz Force Sim",
+    desc: "Simulação 3D de partículas carregadas em campo magnético.",
+    tags: ["Python", "NumPy", "Matplotlib"],
+    link: "https://github.com/BastosDev/PhysicsSimulation",
+    status: "Completed"
+  },
+  {
+    title: "Snell's Law Web",
+    desc: "Visualizador interativo de óptica geométrica e refração.",
+    tags: ["Streamlit", "Physics"],
+    link: "#",
+    status: "In Progress"
+  },
+  {
+    title: "InventoryMaster",
+    desc: "Sistema CRUD para gestão de componentes eletrônicos.",
+    tags: ["FastAPI", "SQLite", "Backend"],
+    link: "#",
+    status: "Planned"
+  }
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gustavo Porto Bastos da Silva | Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+  </head>
+  
+  <body>
+    <div class="bg-fixed">
+      <BlackHole />
+    </div>
+
+    <main>
+      
+      <section class="hero-screen">
+        <div class="content-wrapper">
+          <div class="anim-item delay-1">
+            <div class="terminal-badge">
+              <span class="blink">></span> user: BastosDev
+            </div>
+          </div>
+          
+          <div class="anim-item delay-2">
+            <h1>Gustavo Porto</h1>
+          </div>
+          
+          <div class="anim-item delay-3">
+            <h2>Information Systems Student @ IFBA</h2>
+          </div>
+          
+          <div class="anim-item delay-4">
+            <p class="bio">
+              Arch Linux Enthusiast • Python Developer • Physics Simulations
+            </p>
+          </div>
+
+          <div class="anim-item delay-5">
+            <div class="social-grid">
+              <a href="https://github.com/BastosDev" target="_blank" class="social-btn">
+                <span class="icon">GH</span> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/gustavo-porto-in/" target="_blank" class="social-btn">
+                <span class="icon">IN</span> LinkedIn
+              </a>
+              <a href="mailto:gustavoporto.gp64@gmail.com" class="social-btn">
+                <span class="icon">@</span> Email
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-down anim-item delay-6">
+          <span>scroll down</span>
+          <div class="arrow">↓</div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="section-header">
+          <h3>./whoami</h3>
+          <div class="line"></div>
+        </div>
+
+        <div class="terminal-window">
+          <div class="terminal-bar">
+            <div class="btns">
+              <div class="circle red"></div>
+              <div class="circle yellow"></div>
+              <div class="circle green"></div>
+            </div>
+            <div class="title">gustavo@archlinux:~</div>
+          </div>
+          <div class="terminal-content">
+            <p class="command"><span class="user">gustavo@arch</span>:<span class="tilde">~</span>$ neofetch</p>
+            
+            <div class="neofetch-grid">
+              <div class="ascii-art">
+       /\
+      /  \
+     /    \
+    /      \
+   /   ,,   \
+  /   |  |   \
+ /_-''    ''-_\
+              </div>
+              
+              <div class="info-lines">
+                <p><span class="key">Host</span>: IFBA (Federal Institute)</p>
+                <p><span class="key">OS</span>: Arch Linux x86_64</p>
+                <p><span class="key">Kernel</span>: 6.8.9-arch-hardened</p>
+                <p><span class="key">Uptime</span>: 20 years</p>
+                <p><span class="key">Packages</span>: Python, NumPy, FastAPI</p>
+                <p><span class="key">Shell</span>: zsh 5.9</p>
+                <p><span class="key">Focus</span>: Quantum Comp & Physics Sims</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="section-header">
+          <h3>./projects</h3>
+          <div class="line"></div>
+        </div>
+        
+        <div class="grid">
+          {projects.map((project) => (
+            <a href={project.link} target="_blank" class="card">
+              <div class="card-header">
+                <h4>{project.title}</h4>
+                <span class={`status ${project.status.toLowerCase().replace(' ', '-')}`}>
+                  {project.status}
+                </span>
+              </div>
+              <p>{project.desc}</p>
+              <div class="tags">
+                {project.tags.map(tag => (
+                  <span class="tag">#{tag}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <footer>
+        <p>Built with Astro & Mathematics.</p>
+      </footer>
+
+    </main>
+
+    <script>
+      // @ts-ignore
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* --- BASE --- */
+  :root {
+    --bg-color: #050505;
+    --text-white: #e5e5e5;
+    --text-gray: #a1a1aa;
+    --accent-green: #4ade80;
+    --accent-cyan: #22d3ee;
+    --font-main: 'Inter', sans-serif;
+    --font-code: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-white);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+  }
+
+  /* --- BURACO NEGRO FIXO --- */
+  .bg-fixed {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    z-index: -1; /* Fica atrás de tudo */
+    pointer-events: none;
+  }
+  
+  /* Garante que o canvas seja visível */
+  #ascii-canvas { 
+    opacity: 0.6 !important; 
+    z-index: 0 !important;
+  }
+
+  /* --- ANIMAÇÕES DE ENTRADA (SÓ NO HERO) --- */
+  .anim-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+  .delay-5 { animation-delay: 0.5s; }
+  .delay-6 { animation-delay: 0.8s; }
+
+  @keyframes slideUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- HERO SCREEN --- */
+  .hero-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .content-wrapper {
+    background: radial-gradient(circle, rgba(0,0,0,0.7) 0%, transparent 70%);
+    padding: 3rem;
+    border-radius: 50%;
+  }
+
+  .terminal-badge {
+    font-family: var(--font-code);
+    color: var(--accent-green);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    background: rgba(74, 222, 128, 0.1);
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 1px solid rgba(74, 222, 128, 0.2);
+  }
+
+  .blink { animation: blink 1s infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    background: linear-gradient(180deg, #fff, #999);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    font-weight: 400;
+    font-family: var(--font-code);
+  }
+
+  .bio {
+    margin-top: 1.5rem;
+    color: #888;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .social-grid {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2.5rem;
+  }
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+    text-decoration: none;
+  }
+  .social-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transform: translateY(-3px);
+  }
+
+  .scroll-down {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.5;
+    animation: float 3s ease-in-out infinite;
+  }
+  .scroll-down span { font-family: var(--font-code); font-size: 0.75rem; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+
+  /* --- SECTIONS (Com Z-Index Correto) --- */
+  section#about, section#projects {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem;
+    position: relative;
+    z-index: 10; /* Garante que está acima do buraco negro */
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  h3 { font-family: var(--font-code); font-size: 1.8rem; margin: 0; }
+  .line { flex-grow: 1; height: 1px; background: #333; }
+
+
+  /* --- TERMINAL WINDOW --- */
+  .terminal-window {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    font-family: var(--font-code);
+    overflow: hidden;
+  }
+
+  .terminal-bar {
+    background: #1a1a1a;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #333;
+  }
+  .btns { display: flex; gap: 6px; }
+  .circle { width: 10px; height: 10px; border-radius: 50%; }
+  .red { background: #ff5f56; }
+  .yellow { background: #ffbd2e; }
+  .green { background: #27c93f; }
+  .title { margin-left: auto; margin-right: auto; font-size: 0.8rem; color: #666; }
+
+  .terminal-content { padding: 2rem; font-size: 0.9rem; }
+  .command { margin-bottom: 1.5rem; }
+  .user { color: var(--accent-green); }
+  .tilde { color: var(--accent-cyan); }
+
+  .neofetch-grid { display: flex; gap: 3rem; align-items: flex-start; }
+  .ascii-art { color: var(--accent-cyan); white-space: pre; line-height: 1.2; font-weight: bold; }
+  .info-lines p { margin-bottom: 6px; color: #ccc; }
+  .key { color: var(--accent-green); font-weight: bold; }
+
+
+  /* --- CARDS GRID --- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .card {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid #333;
+    padding: 1.5rem;
+    border-radius: 12px;
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+  .card:hover {
+    border-color: var(--accent-green);
+    transform: translateY(-5px);
+    background: rgba(30, 30, 30, 0.8);
+  }
+  .card h4 { font-size: 1.1rem; margin-bottom: 0.5rem; color: #fff; }
+  .card p { color: #999; font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5; }
+  .status { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #333; color: #aaa; float: right; font-family: var(--font-code); }
+  .status.completed { color: var(--accent-green); background: rgba(74, 222, 128, 0.1); }
+  
+  .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tag { font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; font-family: var(--font-code); }
+
+  footer { text-align: center; color: #444; font-size: 0.8rem; padding-bottom: 2rem; font-family: var(--font-code); }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 3rem; }
+    .neofetch-grid { flex-direction: column; gap: 1rem; }
+  }
+</style>
